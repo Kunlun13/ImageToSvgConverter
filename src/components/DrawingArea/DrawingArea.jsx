@@ -1,11 +1,13 @@
 import React from 'react'
 import { use, useEffect, useRef, useState } from 'react'
+import canvasToSvg from "canvas-to-svg"
 
 function DrawingArea({width, height, pixelSize, colorMatrix}) {
     // const [width, setWidth] = useState(500)
     // const [height, setHeight] = useState(400)
     // const [pixelSize, setPixelSize] = useState(10)
     // console.log(colorMatrix)
+    const ctx = new canvasToSvg(width, height);
     const [red, setRed] = useState(0)
     const [green, setGreen] = useState(0)
     const [blue, setBlue] = useState(0)
@@ -43,6 +45,20 @@ function DrawingArea({width, height, pixelSize, colorMatrix}) {
     // })
   }, [pixelSize, width, height, colorMatrix])
   
+
+  function downloadSvg(){
+    const mySerializedSVG = ctx.getSerializedSvg();
+    const blob = new Blob([mySerializedSVG], { type: 'image/svg+xml;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'grid-art.svg';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  }
   
   const draw = (e) => {
     if(!e.buttons)
@@ -52,16 +68,12 @@ function DrawingArea({width, height, pixelSize, colorMatrix}) {
     const canvasTopPosition = canvas.getBoundingClientRect().top
     const x = Math.floor((e.clientX-canvasLeftPosition)/pixelSize)
     const y = Math.floor((e.clientY-canvasTopPosition)/pixelSize)
-    colorMatrix[y][x] = {red, green, blue};
     const drawit = canvas.getContext('2d')
-    // drawit.fillStyle = `rgba(255, 255, 255, 255)`
-    // drawit.fillRect(x*pixelSize, y*pixelSize, pixelSize, pixelSize)
-    drawit.fillStyle = `rgba(${red}, ${green}, ${blue}, ${alpha})`
+    drawit.fillStyle = `${document.getElementById("drawColor").value}`
+    ctx.fillStyle = `${document.getElementById("drawColor").value}`
+
     drawit.fillRect(x*pixelSize, y*pixelSize, pixelSize, pixelSize)
-    // drawGrid()
-    // console.log(e.clientX-canvasLeftPosition)
-    // console.log(e.clientY-canvasTopPosition)
-    // console.log(colorMatrix)
+    ctx.fillRect(x*pixelSize, y*pixelSize, pixelSize, pixelSize)
   }
   
   
@@ -69,23 +81,17 @@ function DrawingArea({width, height, pixelSize, colorMatrix}) {
     <>
         {/* <h1 className='bg-red-500'>Hello World</h1> */}
   
-        <canvas ref={canvasRef} width={width} height={height} style={{border:'1px solid red'}} onMouseMoveCapture={draw} onMouseDown={draw}>
+        <canvas id='drawing' ref={canvasRef} width={width} height={height} style={{border:'1px solid red'}} onMouseMoveCapture={draw} onMouseDown={draw}>
   
         </canvas>
-        Red{<br/>}
-        <input type="range" max={255} min={0} value={red} onChange={(event)=>{setRed(Number(event.target.value))}}/>{<br/>}
-        Green{<br/>}
-        <input type="range" max={255} min={0} value={green} onChange={(event)=>{setGreen(Number(event.target.value))}}/>
         {<br/>}
-        Blue{<br/>}
-        <input type="range" max={255} min={0} value={blue} onChange={(event)=>{setBlue(Number(event.target.value))}}/>
-        {<br/>}
-    Color:
-    <div className='w-10 h-5' style={{backgroundColor:`rgb(${red}, ${green}, ${blue})`}}></div>
-        Stroke weight{<br/>}
-        <input type="number" style={{border:`1px solid black`}} value={alpha*1000} onChange={(event)=>{setAlpha(Number(event.target.value)/1000)}}/>
+        <label htmlFor="color">Pick Color: </label>
+        <input type="color" name="color" id="drawColor" />
+        {<br/>}{<br/>}
+        <button className='border rounded-md border-black py-1 px-5 bg-green-500 hover:bg-green-400 active:bg-green-300 text-white font-bold' onClick={downloadSvg}>Download</button>
+        {/* Stroke weight{<br/>}
+        <input type="number" style={{border:`1px solid black`}} value={alpha*1000} onChange={(event)=>{setAlpha(Number(event.target.value)/1000)}}/> */}
         <br /><br /><br />
-  
       </>
     )
   }
