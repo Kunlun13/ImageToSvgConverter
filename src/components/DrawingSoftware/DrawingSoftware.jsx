@@ -39,8 +39,14 @@ function DrawingSoftware() {
   // }
 
   return (
-    <div>
+    <div className='w-full overflow-scroll' style={{height:`800px`, width:"100%"}}>
+
+      <div style={{marginLeft:"70px"}}>
+
       <DrawingArea width={squareSide} height={squareSide} pixelSize={pixelSize} colorMatrix={colorMatrix}/>
+      </div>
+      <div style={{position:'absolute',top:"900px", zIndex:"5"}}>
+
     <input type="range" max={100} min={1} value={pixelSize} onChange={(event)=>{setPixelSize(Number(event.target.value))}}/>
     <p>Pixel size : <input type="text" onChange={(e)=>{setPixelSize(Math.max(Number(e.target.value), 1))}} value={pixelSize} className='border text-center border-black' /></p>
     <input type="range" max={500} min={100} value={squareSide} onChange={(event)=>{setSquareSide(Number(event.target.value))}}/>
@@ -49,6 +55,7 @@ function DrawingSoftware() {
       
 
     </div>
+      </div>
   )
 }
 

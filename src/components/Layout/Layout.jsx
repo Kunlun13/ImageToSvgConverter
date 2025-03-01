@@ -7,11 +7,15 @@ function Layout() {
   return (
     <>
     <Header/>
-  
-  {<div className='flex justify-center'>
-  <Outlet />
-  </div>}
+  {
 
+    <div className='flex justify-center flex-wrap p-3'>
+      <div>Left</div>
+      <Outlet />
+      <div>right</div>
+
+  </div>
+  }
     <Footer />
     </>
   )

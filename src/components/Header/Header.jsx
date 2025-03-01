@@ -3,7 +3,7 @@ import { Link, NavLink } from 'react-router-dom'
 
 function Header() {
   return (
-    <div>
+    <div className='w-full'>
     <div className='text-center bg-emerald-500 p-8' style={{fontFamily:'cursive',fontSize:'50px'}}>Svg Generator</div>
     <header>
         <nav className='flex justify-around bg-green-800 p-1'>

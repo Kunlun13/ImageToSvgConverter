@@ -85,7 +85,7 @@ function DrawingArea({width, height, pixelSize, colorMatrix}) {
   
         </canvas>
         {<br/>}
-        <label htmlFor="color">Pick Color: </label>
+        <label htmlFor="drawColor">Pick Color: </label>
         <input type="color" name="color" id="drawColor" />
         {<br/>}{<br/>}
         <button className='border rounded-md border-black py-1 px-5 bg-green-500 hover:bg-green-400 active:bg-green-300 text-white font-bold' onClick={downloadSvg}>Download</button>
