@@ -50,7 +50,7 @@ function DrawingSoftware() {
     <input type="range" max={100} min={1} value={pixelSize} onChange={(event)=>{setPixelSize(Number(event.target.value))}}/>
     <p>Pixel size : <input type="number" max={100} min={1} onChange={(e)=>{setPixelSize(Math.min(Math.max(Number(e.target.value), 1), 100))}} value={pixelSize} className='border text-center border-black' /></p>
     <input type="range" max={500} min={100} value={squareSide} onChange={(event)=>{setSquareSide(Number(event.target.value))}}/>
-    <p>Square Side : {squareSide}</p>
+    <p>Canvas Side Length : <input type="number" max={500} min={100} onChange={(e)=>{setSquareSide(Math.min(Math.max(Number(e.target.value), 1), 100))}} value={squareSide} className='border text-center border-black' /></p>
 
       
 
