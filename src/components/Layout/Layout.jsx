@@ -5,7 +5,7 @@ import Footer from '../Footer/Footer'
 
 function Layout() {
   return (
-    <div className='h-lvh bg-purple-950' style={{fontFamily:"cursive"}}>
+    <div className='h-lvh bg-purple-950' style={{fontFamily:"Sour Gummy"}}>
     <Header/>
   {
 

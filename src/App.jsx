@@ -1,5 +1,4 @@
 import './App.css'
-import DrawingSoftware from './components/DrawingSoftware/DrawingSoftware'
 
 function App() {
 

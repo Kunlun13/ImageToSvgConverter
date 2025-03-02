@@ -2,7 +2,7 @@ import React from 'react'
 
 function ContactUs() {
   return (
-    <div className='p-44' style={{fontSize:"15px"}}>
+    <div className='p-44' style={{fontSize:"18px"}}>
 <p>
 We’d love to hear from you! Whether you have questions, feedback, or suggestions, feel free to reach out.
 <br/><br/>

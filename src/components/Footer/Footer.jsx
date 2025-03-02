@@ -5,7 +5,7 @@ function Footer() {
   return (
     <div className='bg-purple-950 text-purple-200 text-center'>
       © {new Date().getFullYear()} PiXsvg Creator. All rights reserved | {" "}
-      <NavLink to="PrivacyPolicy">Privacy Policy</NavLink>
+      <NavLink to="PrivacyPolicy" className="hover:text-red-300">Privacy Policy</NavLink>
     </div>
   )
 }
