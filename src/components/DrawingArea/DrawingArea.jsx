@@ -12,6 +12,7 @@ function DrawingArea({width, height, pixelSize, colorMatrix}) {
     const [green, setGreen] = useState(0)
     const [blue, setBlue] = useState(0)
     const [alpha, setAlpha] = useState(1)
+    const [erase, setErase] = useState(false)
     // console.log(colorMatrix)
     const canvasRef = useRef(null)
     const drawGrid = () => {
@@ -19,7 +20,7 @@ function DrawingArea({width, height, pixelSize, colorMatrix}) {
       if(!canvasRef)
       return
     const draw = canvas.getContext('2d')
-    draw.clearRect(0, 0, width, height)
+    // draw.clearRect(0, 0, width, height)
     draw.lineWidth = 1
     draw.strokeStyle = "#000"
     for (let x = 0; x <=width; x+=pixelSize) {
@@ -37,16 +38,21 @@ function DrawingArea({width, height, pixelSize, colorMatrix}) {
   }
   
   useEffect(()=>{
+    const canvas = canvasRef.current
+      if(!canvasRef)
+      return
+    const draw = canvas.getContext('2d')
+    draw.clearRect(0, 0, width, height)
     drawGrid()
     // const canvasRef = useRef(null)
     // const draw = canvas.getContext('2d')
     // draw.addEventListener("click", ()=>{
-    //   console.log("haha")
-    // })
-  }, [pixelSize, width, height, colorMatrix])
-  
-
-  function downloadSvg(){
+      //   console.log("haha")
+      // })
+    }, [pixelSize, width, height, colorMatrix])
+    
+    
+    function downloadSvg(){
     const mySerializedSVG = ctx.getSerializedSvg();
     const blob = new Blob([mySerializedSVG], { type: 'image/svg+xml;charset=utf-8' });
     const url = URL.createObjectURL(blob);
@@ -69,12 +75,23 @@ function DrawingArea({width, height, pixelSize, colorMatrix}) {
     const x = Math.floor((e.clientX-canvasLeftPosition)/pixelSize)
     const y = Math.floor((e.clientY-canvasTopPosition)/pixelSize)
     const drawit = canvas.getContext('2d')
-    drawit.fillStyle = `${document.getElementById("drawColor").value}`
-    ctx.fillStyle = `${document.getElementById("drawColor").value}`
+    if(!erase)
+    {
+      drawit.fillStyle = `${document.getElementById("drawColor").value}`
+      ctx.fillStyle = `${document.getElementById("drawColor").value}`
+      drawit.fillRect(x*pixelSize, y*pixelSize, pixelSize, pixelSize)
+      ctx.fillRect(x*pixelSize, y*pixelSize, pixelSize, pixelSize)
+    }
+    else{
+      drawit.fillStyle = `rgba(0,0,0,0)`
+      ctx.fillStyle = `rgba(0,0,0,0)`
+      drawit.clearRect(x*pixelSize, y*pixelSize, pixelSize, pixelSize)
+      ctx.clearRect(x*pixelSize, y*pixelSize, pixelSize, pixelSize)
+    }
+    drawGrid()
 
-    drawit.fillRect(x*pixelSize, y*pixelSize, pixelSize, pixelSize)
-    ctx.fillRect(x*pixelSize, y*pixelSize, pixelSize, pixelSize)
   }
+  
   
   
   return (
@@ -87,7 +104,10 @@ function DrawingArea({width, height, pixelSize, colorMatrix}) {
         {<br/>}
         <label htmlFor="drawColor">Pick Color: </label>
         <input type="color" name="color" id="drawColor" />
-        {<br/>}{<br/>}
+        <br/>
+         
+        <input type="checkbox" className='w-5 h-5' style={{marginLeft:"25px"}}
+        onChange={(e)=>{setErase(e.target.checked);console.log(erase)}} /> : Erase<br/><br/><br/>
         <button className='border rounded-md border-black py-1 px-5 bg-green-500 hover:bg-green-400 active:bg-green-300 text-white font-bold' onClick={downloadSvg}>Download</button>
         {/* Stroke weight{<br/>}
         <input type="number" style={{border:`1px solid black`}} value={alpha*1000} onChange={(event)=>{setAlpha(Number(event.target.value)/1000)}}/> */}
