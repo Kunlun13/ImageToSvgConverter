@@ -39,22 +39,24 @@ function DrawingSoftware() {
   // }
 
   return (
-    <div className='w-full overflow-auto' style={{height:`800px`, width:"100%"}}>
+    <div className='w-full overflow-auto' style={{height:"900px", width:"100%"}}>
 
-      <div style={{marginLeft:"70px"}}>
-
-      <DrawingArea width={squareSide} height={squareSide} pixelSize={pixelSize} colorMatrix={colorMatrix}/>
-      </div>
-      <div style={{position:'absolute',top:"900px", zIndex:"5"}}>
+<div style={{marginBottom:"50px",top:"1000px", zIndex:"5"}}>
 
     <input type="range" max={100} min={1} value={pixelSize} onChange={(event)=>{setPixelSize(Number(event.target.value))}}/>
     <p>Pixel size : <input type="number" max={100} min={1} onChange={(e)=>{setPixelSize(Math.min(Math.max(Number(e.target.value), 1), 100))}} value={pixelSize} className='border text-center border-black' /></p>
     <input type="range" max={500} min={100} value={squareSide} onChange={(event)=>{setSquareSide(Number(event.target.value))}}/>
     <p>Canvas Side Length : <input type="number" max={500} min={100} onChange={(e)=>{setSquareSide(Math.min(Math.max(Number(e.target.value), 1), 500))}} value={squareSide} className='border text-center border-black' /></p>
 
-      
-
     </div>
+<p className='bg-red-400 inline font-bold p-1 rounded-sm'>
+      Whole Drawing will be lost after refreshing the page Or changing Above specifications
+</p>
+      <div style={{marginLeft:"70px",justifyItems:"center",marginTop:"20px"}}>
+
+      <DrawingArea width={squareSide} height={squareSide} pixelSize={pixelSize} colorMatrix={colorMatrix}/>
+      </div>
+      
       </div>
   )
 }

@@ -81,7 +81,7 @@ function DrawingArea({width, height, pixelSize, colorMatrix}) {
     <>
         {/* <h1 className='bg-red-500'>Hello World</h1> */}
   
-        <canvas id='drawing' ref={canvasRef} width={width} height={height} style={{border:'1px solid red'}} onMouseMoveCapture={draw} onMouseDown={draw}>
+        <canvas id='drawing' ref={canvasRef} width={width} height={height} style={{border:'1px solid red',cursor:"crosshair"}} onMouseMoveCapture={draw} onMouseDown={draw}>
   
         </canvas>
         {<br/>}

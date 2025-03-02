@@ -5,19 +5,18 @@ import Footer from '../Footer/Footer'
 
 function Layout() {
   return (
-    <>
+    <div className='h-lvh bg-purple-950' style={{fontFamily:"cursive"}}>
     <Header/>
   {
 
-    <div className='flex justify-center flex-wrap p-3'>
-      <div>Left</div>
+    <div className='flex justify-center flex-wrap p-3 bg-purple-200'>
       <Outlet />
-      <div>right</div>
 
   </div>
   }
+
     <Footer />
-    </>
+    </div>
   )
 }
 
