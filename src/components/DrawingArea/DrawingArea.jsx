@@ -12,7 +12,7 @@ function DrawingArea({width, height, pixelSize, colorMatrix}) {
     const [green, setGreen] = useState(0)
     const [blue, setBlue] = useState(0)
     const [alpha, setAlpha] = useState(1)
-    const [erase, setErase] = useState(false)
+    let erase = false
     // console.log(colorMatrix)
     const canvasRef = useRef(null)
     const drawGrid = () => {
@@ -83,8 +83,6 @@ function DrawingArea({width, height, pixelSize, colorMatrix}) {
       ctx.fillRect(x*pixelSize, y*pixelSize, pixelSize, pixelSize)
     }
     else{
-      drawit.fillStyle = `rgba(0,0,0,0)`
-      ctx.fillStyle = `rgba(0,0,0,0)`
       drawit.clearRect(x*pixelSize, y*pixelSize, pixelSize, pixelSize)
       ctx.clearRect(x*pixelSize, y*pixelSize, pixelSize, pixelSize)
     }
@@ -107,7 +105,7 @@ function DrawingArea({width, height, pixelSize, colorMatrix}) {
         <br/>
          
         <input type="checkbox" className='w-5 h-5' style={{marginLeft:"25px"}}
-        onChange={(e)=>{setErase(e.target.checked);console.log(erase)}} /> : Erase<br/><br/><br/>
+        onChange={(e)=>{erase = (e.target.checked);console.log(erase)}} /> : Erase<br/><br/><br/>
         <button className='border rounded-md border-black py-1 px-5 bg-green-500 hover:bg-green-400 active:bg-green-300 text-white font-bold' onClick={downloadSvg}>Download</button>
         {/* Stroke weight{<br/>}
         <input type="number" style={{border:`1px solid black`}} value={alpha*1000} onChange={(event)=>{setAlpha(Number(event.target.value)/1000)}}/> */}
